@@ -20,7 +20,6 @@ def sale():
     #udskriv bon
     #modtag betaling til kassen
     #fejl beskeder for varer som ikke findes
-    #noget her
     pass
 
 supply_options = """
@@ -74,7 +73,7 @@ def supply(shop):
             pass
 
         if option == "4":
-            pass
+            print("{}{}{}{}".format("Item ID", "Name", ))
 
         if option == "0":
             pass
