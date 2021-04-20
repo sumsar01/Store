@@ -19,7 +19,7 @@ shop = {
     }
 
 
-
+supply(shop)
 
 
 

@@ -24,17 +24,44 @@ def sale():
     #fejl beskeder for varer som ikke findes
     pass
 
-def supply():
+supply_options = """
+    Supply options:
+    1) Add item
+    2) Remove item
+    3) View supply
+    4) Update supply
+
+    0) Exit
+                """
+
+def supply(shop):
+    done = False
+    while not done:
+        print(supply_options)
+        option = input("Chose an option: ")
+        if option == "1":
+            pass
+
+        if option == "2":
+            pass
+
+        if option == "3":
+            pass
+
+        if option == "4":
+            pass
+
+        if option == "0":
+            pass
     #tilføj varer
     #fjern varer
     #se lager
     #opdater lager
     #betal for lager
     #købsnota
-    pass
 
 
-
+supply()
 
 
 
