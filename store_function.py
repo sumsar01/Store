@@ -1,5 +1,3 @@
-
-
 def open_shop(shop):
     #optæl kasse
     #optæl varebeholdning
@@ -34,13 +32,39 @@ supply_options = """
     0) Exit
                 """
 
+
+shop = {
+    "inventory": 
+        {
+        123: ["Kartofler", 4.75, "kg", 100],
+        143: ["Makrelguf", 10.50, "pakke", 30],
+        185: ["Fintmalet kaffe", 44.25, "stk", 40]
+        },
+
+    "cash" : 
+        588.75,
+
+    "receipts": 
+        [],
+
+    "employees":
+        ["Michael", "Rasmus"]
+    }
+
+
 def supply(shop):
     done = False
     while not done:
         print(supply_options)
         option = input("Chose an option: ")
         if option == "1":
-            pass
+            print("Adding new sales item...")
+            item_ID = input("Item ID: ")
+            item_name = input("Item name: ")
+            item_price = float(input("Item price: "))
+            item_unit = input("What is the unit of the item?: ")
+            item = {item_ID: [item_name, item_price, item_unit, 0]}
+            shop["inventory"].extend(item)
 
         if option == "2":
             pass
@@ -61,10 +85,7 @@ def supply(shop):
     #købsnota
 
 
-supply()
-
-
-
+supply(shop)
 
 
 
