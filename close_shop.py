@@ -25,7 +25,7 @@ def close_shop(shop):
     #print dag
     print(f"Date: {date.today()}")
     #optæl kasse
-    print(f"Register contains {shop['cash']} money")
+    print(f"Register contains {cash} money")
     #optæl bon
     keys = shop["inventory"].keys()
     for key in keys:
