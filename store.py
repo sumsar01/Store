@@ -19,37 +19,5 @@ shop = {
     }
 
 
-help(sale)
 
-
-
-"""
-done = False
-while not done:
-    print("Velkommen til næste kunde...")
-    sum = 0.0
-
-    flere_varer = True
-    while flere_varer:
-        stregkode = input("indtast varer nr: ")
-        if stregkode == "":
-            flere_varer = False
-        else:
-            stregkode = int(stregkode)
-            if stregkode in varelager:
-                print("Varen er {} og prisen er {} kr, der er {} enheder på lager".format(varelager[stregkode][0], varelager[stregkode][1], varelager[stregkode][3]))
-                antal = int(input("Hvor mange enheder købes? "))
-                if antal == 0:
-                    break
-                varelager[stregkode][3] -= antal
-                sum += int(varelager[stregkode][1])*antal
-            else:
-                print("Fejl stregkode findes ikke...")
-            
-
-    print("Det bliver {} kr".format(sum))
-    svar = input("Er der flere kunder? y/n: ")
-    if svar == 'n':
-        done = True
-        print("Der er ikke flere kunder...")
-"""
+supply(shop)
