@@ -19,7 +19,7 @@ shop = {
     }
 
 
-open_shop(shop)
+help(sale)
 
 
 

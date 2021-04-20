@@ -20,15 +20,38 @@ def close_shop(shop):
     #udskriv kasse raport
     pass
 
-def sale():
-    #for alle varer i salget:
-    ##fjern vare fra lager
-    ##læg priser til sum
-    ##opdater bonner
-    #udskriv bon
-    #modtag betaling til kassen
-    #fejl beskeder for varer som ikke findes
-    pass
+def sale(shop):
+    """"
+    Buying items untill an empty ID for an item is given.
+    Count a bill for the customer and store items bought in a list
+    prints a bill for the custormer
+    adds the amount to "cash" in shop and the list of items to "receipts"
+    """
+    customer_bill = 0.0
+    customer_receipt = []
+    done = False
+
+    while not done:
+        print("Scanning next item... ")
+        item_ID = input("Item ID: ")
+        if item_ID == "":
+            print("No more items pending...")
+            break
+        else:
+            item_ID = int(item_ID)
+            if item_ID not in shop["inventory"]:
+                print("Error: Item ID not found...")
+            else:
+                item_number = int(input(f'How many {shop["inventory"][item_ID][0]} are you buying?: '))
+                customer_receipt.append((item_ID, item_number))
+                customer_bill += shop["inventory"][item_ID][1]*item_number
+                shop["inventory"][item_ID][3] -= item_number
+    shop["receipts"].extend(customer_receipt)
+    shop["cash"] += customer_bill
+    print("Printing bill...")
+    for ID, amount in customer_receipt:
+        print(f'{amount} {shop["inventory"][ID][0]}: {shop["inventory"][ID][1]*amount} kr')
+
 
 supply_options = """
     Supply options:
@@ -46,8 +69,6 @@ def supply(shop):
     2) Allows user to remove items using item IDs
     3) Show user current item stock
     4) Allows user to restock items by using their ID and number of added items
-
-
     """
 
     done = False
