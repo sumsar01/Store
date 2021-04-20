@@ -1,4 +1,4 @@
-import store_function
+from store_function import *
 
 shop = {
     "inventory": 
@@ -19,7 +19,7 @@ shop = {
     }
 
 
-supply(shop)
+open_shop(shop)
 
 
 
