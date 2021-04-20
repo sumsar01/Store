@@ -22,7 +22,7 @@ def sale():
     #udskriv bon
     #modtag betaling til kassen
     #fejl beskeder for varer som ikke findes
-    #noget mere her
+    #noget her
     pass
 
 supply_options = """
