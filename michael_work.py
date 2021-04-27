@@ -1,37 +1,45 @@
 import numpy as np
 import datetime as dt
     
-class Book:
-    """ """
-    def __init__(self):
-        self.reciepts = [] # list of reciepts 
-        self.day_sales = []   # list of sales for each day
-        self.day_costs = []  # list of variable costs for each day
-        self.day_balance = []    # list of sales - variable cost for each day
+class Reciept:
+    def __init__(self, list_of_id_quantity, buy_sell="s"):
+        self.date = dt.datetime.now().date()
+        self.item_entries = []
+        self.total = 0
+        self.buy_sell = buy_sell
+
+        prices_or_costs = calc_item_pricecost(list_of_id_quantity)
+        self.item_entries = make_final_item_entries(list_of_id_quantity, prices_or_costs)
+        calc_total()
 
 
-    def add_reciepts(self, file):
+    def calc_item_pricecost(self):
+        if self.buy_sell == "s":
+            # fetch prices of IDs (brug stock)
+            # make list with all prices of IDs
+            # multiply unit prices with quantities to get prices
+            break
+        if self.buy_sell == "b":
+            # fetch costs of IDs (brug stock)
+            # make list with costs of IDs
+            # multiply unit costs with quantities to get costs
+            break
         pass
 
-    def find_day_costs(self, date):
-        day_costs = 0 
-        reciepts_of_day_costs = list(filter(lambda e: e[0].date() == date and e[2] < 0, self.reciepts))
-        for i in range(len(reciepts_of_day_costs)):
-            day_costs += reciepts_of_day_costs[i][2] 
-        self.day_costs.append(day_costs)
+            
+    def make_full_item_entries():
 
-    def find_day_sales(self, date):
-        day_sales = 0 
-        reciepts_of_day_sales = list(filter(lambda e: e[0].date() == date and e[2] > 0, self.reciepts))
-        for i in range(len(reciepts_of_day_sales)):
-            day_sales += reciepts_of_day_sales[i][2] 
-        self.day_sales.append(day_sales)
+        pass
+    
+    def calc_total():
+        pass
 
-    def print_history(self):
-        unique_days_in_reciepts = np.unique([e[0].date() for e in self.reciepts])
-        print("{:<10} {:<10} {:<10}".format("Sales", "Costs", "Date"))
-        for i in range(len(self.day_sales)):
-            print("{:<10} {:<10} {:<10}".format(self.day_sales[i], self.day_costs[i], unique_days_in_reciepts[i]))
+
+
+        for ID, amount, 
+
+
+
 
 book = Book()
 book.reciepts = [(dt.datetime.now(), [[1, 10, 40, 50], [2, 10, 30, 50], [3, 40, 10, 20]], 20), (dt.datetime.now(), [[1, 10, 40, 50], [2, 10, 30, 50], [3, 40, 10, 20]], 20),
