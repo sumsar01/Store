@@ -1,12 +1,17 @@
 class Shop:
+    pass
 
 class Book:
+    pass
 
 class Account:
+    pass
 
 class Transaction:
+    pass
 
 class Counter:
+    pass
 
 class Stock:
     """
@@ -67,7 +72,6 @@ class Stock:
             print("{:<5} {:<20} {:<10} {:<10} {:<10} {:<10}".format(ID, self.stock[ID][0].name, self.stock[ID][0].unit, self.stock[ID][0].cost, self.stock[ID][1], self.stock[ID][2]))
         print("\n")
 
-
 class StockUnit:
     """
     Stock item.
@@ -123,6 +127,8 @@ class StockUnit:
 
 
 class Clerk:
+    pass
 
 class Receipt:
+    pass
 
