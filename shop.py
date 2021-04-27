@@ -1,8 +1,42 @@
+import numpy as np
+import datetime as dt
+
+
 class Shop:
     pass
 
 class Book:
-    pass
+    """ """
+    def __init__(self):
+        self.reciepts = [] # list of reciepts 
+        self.day_sales = []   # list of sales for each day
+        self.day_costs = []  # list of variable costs for each day
+        self.day_balance = []    # list of sales - variable cost for each day
+
+
+    def add_reciepts(self, file):
+        pass
+
+    def find_day_costs(self, date):
+        day_costs = 0 
+        reciepts_of_day_costs = list(filter(lambda e: e[0].date() == date and e[2] < 0, self.reciepts))
+        for i in range(len(reciepts_of_day_costs)):
+            day_costs += reciepts_of_day_costs[i][2] 
+        self.day_costs.append(day_costs)
+
+    def find_day_sales(self, date):
+        day_sales = 0 
+        reciepts_of_day_sales = list(filter(lambda e: e[0].date() == date and e[2] > 0, self.reciepts))
+        for i in range(len(reciepts_of_day_sales)):
+            day_sales += reciepts_of_day_sales[i][2] 
+        self.day_sales.append(day_sales)
+
+    def print_history(self):
+        unique_days_in_reciepts = np.unique([e[0].date() for e in self.reciepts])
+        print("{:<10} {:<10} {:<10}".format("Sales", "Costs", "Date"))
+        for i in range(len(self.day_sales)):
+            print("{:<10} {:<10} {:<10}".format(self.day_sales[i], self.day_costs[i], unique_days_in_reciepts[i]))
+
 
 class Account:
     pass
@@ -134,4 +168,3 @@ class Clerk:
 
 class Receipt:
     pass
-
