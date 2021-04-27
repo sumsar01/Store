@@ -18,6 +18,3 @@ shop = {
         ["Michael", "Rasmus"]
     }
 
-
-
-supply(shop)
