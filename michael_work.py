@@ -18,9 +18,9 @@ class Book:
 
     def find_day_sales(self, day):
         day_sales = 0 
-        reciepts_of_day_sales = list(filter(lambda e: e[0].date.day == day and e[2] > 0, self.reciepts))
+        reciepts_of_day_sales = list(filter(lambda e: e[0].day == day and e[2] > 0, self.reciepts))
         for i in range(len(reciepts_of_day_sales)):
-            day_sales += reciepts_of_day_sales[2] 
+            day_sales += reciepts_of_day_sales[i][2] 
         self.day_sales.append(day_sales)
 
     def print_history(self):
@@ -32,6 +32,7 @@ class Book:
 book = Book()
 book.reciepts = [(dt.datetime.now(), [[1, 10, 40, 50], [2, 10, 30, 50], [3, 40, 10, 20]], 20), (dt.datetime.now(), [[1, 10, 40, 50], [2, 10, 30, 50], [3, 40, 10, 20]], 20)]
 book.find_day_sales(dt.datetime.now().day)
+print(book.day_sales)
 
 
 #book.day_sales = [10, 20]
