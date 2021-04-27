@@ -41,8 +41,49 @@ class Book:
 class Account:
     pass
 
-class Transaction:
-    pass
+class Sale:
+    """
+    Make a sale of either a list of IDs or a single ID
+    must take the used item stock, the book for reciepts 
+    and the account used for the transaction.
+
+    Sale(ID, amount, stock, book, account)
+
+    ID - Is either a single ID or a list of IDs on the form [ID_1, ID_2, ...].
+    amount - Is the amount of items bought of ID, either a single int or a list [amount_1, amount_2, ...].
+    stck - The stock used in the transaction.
+    book - The book used for the transaction.
+    account - the account used for the transaction.
+    """
+    
+    def __init__(self, ID, amount, stock, book, account):
+        self.sum = 0
+        receipt_list = []
+        if type(ID) == list:
+            for i in range(len(ID)):
+                stock.use_item(ID[i], amount[i])
+                price = stock.get_price(ID[i])
+                self.sum += amount[i]*price[i]
+                receipt_list.append((ID[i], amount[i]))
+            else: 
+                stock.use_item(ID, amount)
+                price = stock.get_price(ID)
+                self.sum += amount*price
+                receipt_list.append((ID, amount))
+
+        receipt = Receipt(receipt_list)
+        book.add_reciepts(self, reciepts)
+        account.add_transaction(sum)
+
+        print("".format("Item", "Amount", "Price pr. unit"))
+        if type(ID) == list:
+            for i in range(len(ID)):
+                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]), amount[i], stock.get_price(ID[i])))
+        else:
+            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID), amount, stock.get_price(ID)))
+
+        print("\n")
+        print("Total: {} kr".format(sum))
 
 class Counter:
     pass
