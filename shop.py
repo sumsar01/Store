@@ -14,7 +14,7 @@ class Book:
         self.day_balance = []    # list of sales - variable cost for each day
 
 
-    def add_reciepts(self, file):
+    def add_reciepts(self, reciepts):
         pass
 
     def find_day_costs(self, date):
@@ -71,6 +71,15 @@ class Stock:
 
     stock_information()
         Prints informations on the items in the stock.
+
+    get_price(ID)
+        Returns price of selling on item with ID.
+
+    get_cost(ID)
+        Get the cost of buying home on unit of the item with ID.
+
+    get_item(ID)
+        returns stock item with ID.
     """
     def __init__(self):
         self.stock = {}
@@ -108,6 +117,13 @@ class Stock:
 
     def get_price(self, ID):
         return self.stock[ID][1]
+
+    def get_cost(self, ID):
+        return self.stock[ID][0].cost
+
+    def get_item(self, ID):
+        return self.stock[ID]
+
 
 class StockUnit:
     """
