@@ -281,14 +281,14 @@ class StockUnit:
         if type(new_description) == str:
             self.description = new_description
         else:
-            ValueError("Error: wrong type the description must be a string...")
+            raise ValueError("Error: wrong type the description must be a string...")
 
 
     def set_cost(self, new_cost):
         if type(new_cost) == float:
             self.cost = new_cost
         else:
-            ValueError("Error: wrong type the new cost must be a float...")
+            raise ValueError("Error: wrong type the new cost must be a float...")
 
 class Clerk:
     pass
