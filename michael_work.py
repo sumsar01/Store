@@ -1,5 +1,6 @@
 import numpy as np
 import datetime as dt
+import shop
     
 class Reciept:
     """ This class is used to hold the reciept of transactions.
@@ -57,6 +58,29 @@ class Reciept:
         total = 0
         for i in range(len(self.item_entries)):
             total += self.item_entries[i][2]
-        return total
+        self.total = total 
+
+
+    def print_reciept(self):
+        print("\n\t   RECIEPT \t")
+        print("{:<10} {:<10} {:<10}".format("ID", "Amount", "Price"))
+        for item in self.item_entries:
+            ID = item[0]
+            amount = item[1]
+            price = item[2]
+            print("{:<10} {:<10} {:<10}".format(ID, amount, price))
+        print("Total:\t\t       {:<30}\n".format(self.total))
+
+potatoes = shop.StockUnit("Potatoes", 10, "kg", "Danish potatoes")
+eggs = shop.StockUnit("Eggs", 18, "stk", "Expensive eggs")
+
+test_stock = shop.Stock()
+test_stock.add_item(1, eggs, 25, 50)
+test_stock.add_item(2, potatoes, 15, 30)
+
+reciept1 = Reciept([(1, 2), (2, 2)], test_stock)
+reciept1.print_reciept()
+
+
 
 
