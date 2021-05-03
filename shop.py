@@ -37,7 +37,6 @@ class Book:
         for i in range(len(self.day_sales)):
             print("{:<10} {:<10} {:<10}".format(self.day_sales[i], self.day_costs[i], unique_days_in_reciepts[i]))
 
-
 class Account:
     """
     An account of the current monetary holdings.
@@ -59,13 +58,13 @@ class Account:
         if type(float(starting_holdings)) == float():
             self.account_holding = float(starting_holdings)
         else:
-            print("Error: Starting holdings must be a float or int...")
+            ValueError("Error: Starting holdings must be a float or int...")
 
     def add_transaction(self, sum):
         if type(float(sum)) == float():
             self.account_holding += float(sum)
         else:
-            print("Error: sum must be a float or int...")
+            ValueError("Error: sum must be a float or int...")
 
     def get(self):
         return self.account_holding
@@ -100,7 +99,7 @@ class Sale:
                 self.sum += amount*price
                 receipt_list.append((ID, amount))
 
-        receipt = Receipt(receipt_list)
+        receipt = Receipt(receipt_list, stock)
         book.add_reciepts(self, reciepts)
         account.add_transaction(sum)
 
@@ -144,7 +143,7 @@ class Purchase:
                 self.sum += amount*price
                 receipt_list.append((ID, amount))
 
-        receipt = Receipt(receipt_list, "b")
+        receipt = Receipt(receipt_list, stock, "p")
         book.add_reciepts(self, reciepts)
         account.add_transaction(-sum) #romving used amount
 
@@ -238,7 +237,6 @@ class Stock:
     def get_item(self, ID):
         return self.stock[ID]
 
-
 class StockUnit:
     """
     Stock item.
@@ -283,15 +281,14 @@ class StockUnit:
         if type(new_description) == str:
             self.description = new_description
         else:
-            print("Error: wrong type the description must be a string...")
+            ValueError("Error: wrong type the description must be a string...")
 
 
     def set_cost(self, new_cost):
         if type(new_cost) == float:
             self.cost = new_cost
         else:
-            print("Error: wrong type the new cost must be a float...")
-
+            ValueError("Error: wrong type the new cost must be a float...")
 
 class Clerk:
     pass
