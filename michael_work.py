@@ -71,15 +71,6 @@ class Reciept:
             print("{:<10} {:<10} {:<10}".format(ID, amount, price))
         print("Total:\t\t       {:<30}\n".format(self.total))
 
-potatoes = shop.StockUnit("Potatoes", 10, "kg", "Danish potatoes")
-eggs = shop.StockUnit("Eggs", 18, "stk", "Expensive eggs")
-
-test_stock = shop.Stock()
-test_stock.add_item(1, eggs, 25, 50)
-test_stock.add_item(2, potatoes, 15, 30)
-
-reciept1 = Reciept([(1, 2), (2, 2)], test_stock)
-reciept1.print_reciept()
 
 
 
