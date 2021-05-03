@@ -2,6 +2,24 @@ import numpy as np
 import datetime as dt
     
 class Reciept:
+    """ This class is used to hold the reciept of transactions.
+
+        Arguments: 
+        list_of_id_quantity {[(,),...]} -- To make a reciept object one has to supply a list of tuples: (ID, quantity)
+        which contains the ID of the product bought and the quantity.
+
+        stock {Stock()} -- A stock object has to be supplied to be able to fetch the price/cost of each entry
+        on a given reciept.
+
+        Keyword arguments:
+        purchase sale {string} -- A string that must be either "s" if the reciept is for a sale by the shop or "p" if
+        it is for a purchase buy the shop from a supplier.
+
+        Returns:
+        Reciept object. The object has a date, item_entries which contains a list of tuples: (ID, quantity, total price/cost for this ID),
+        a total price/cost and finally whether it was a purchase or sale.
+    """
+
     def __init__(self, list_of_id_quantity, stock, purchase_sale="s"):
         self.date = dt.datetime.now().date()
         self.item_entries = []
@@ -26,7 +44,6 @@ class Reciept:
 
             prices_costs.append(price_cost * quantity)
         return prices_costs
-
             
     def make_full_item_entries(self, list_of_id_quantity, prices_or_costs):
         item_entries_list = []
@@ -41,3 +58,5 @@ class Reciept:
         for i in range(len(self.item_entries)):
             total += self.item_entries[i][2]
         return total
+
+
