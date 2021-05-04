@@ -1,7 +1,7 @@
 import shop
 import pytest
 
-def test_Purchase():
+def test_Sale():
     stock1 = shop.Stock()
     stock2 = shop.Stock()
     mælk = shop.StockUnit("mælk", 2.50, "liter")
@@ -14,14 +14,14 @@ def test_Purchase():
     account2 = shop.Account(2000)
 
 
-    shop.Purchase("123", 50, stock1, book1, account1)
-    shop.Purchase("255", 5, stock2, book2, account2)
+    shop.Sale("123", 50, stock1, book1, account1)
+    shop.Sale("255", 5, stock2, book2, account2)
 
-    assert account1.get() == (2000 - 50*2.50)
-    assert account2.get() == (2000 - 5*15.00)
+    assert account1.get() == (2000 + 50*7.50)
+    assert account2.get() == (2000 + 5*59.95)
 
-    assert stock1.stock["123"][2] == 150
-    assert stock2.stock["255"][2] == 25
+    assert stock1.stock["123"][2] == 50
+    assert stock2.stock["255"][2] == 15
 
     #mangler at tæste at regningen er der
     #mangler at teste for en liste af inputs

@@ -102,8 +102,8 @@ class Sale:
             receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock)
-        book.add_reciepts(self, receipt)
-        account.add_transaction(sum)
+        book.add_reciepts(receipt)
+        account.add_transaction(self.sum)
 
         print("".format("Item", "Amount", "Price pr. unit"))
         if type(ID) == list:
