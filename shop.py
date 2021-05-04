@@ -95,25 +95,25 @@ class Sale:
                 price = stock.get_price(ID[i])
                 self.sum += amount[i]*price[i]
                 receipt_list.append((ID[i], amount[i]))
-            else: 
-                stock.use_item(ID, amount)
-                price = stock.get_price(ID)
-                self.sum += amount*price
-                receipt_list.append((ID, amount))
+        else: 
+            stock.use_item(ID, amount)
+            price = stock.get_price(ID)
+            self.sum += amount*price
+            receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock)
-        book.add_reciepts(self, reciepts)
+        book.add_reciepts(self, receipt)
         account.add_transaction(sum)
 
         print("".format("Item", "Amount", "Price pr. unit"))
         if type(ID) == list:
             for i in range(len(ID)):
-                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]), amount[i], stock.get_price(ID[i])))
+                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]).name, amount[i], stock.get_price(ID[i])))
         else:
-            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID), amount, stock.get_price(ID)))
+            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID).name, amount, stock.get_price(ID)))
 
         print("\n")
-        print("Total: {} kr".format(sum))
+        print("Total: {} kr".format(self.sum))
 
 class Purchase:
     """
@@ -135,29 +135,29 @@ class Purchase:
         receipt_list = []
         if type(ID) == list:
             for i in range(len(ID)):
-                stock.use_item(ID[i], amount[i])
+                stock.update_stock(ID[i], amount[i])
                 price = stock.get_cost(ID[i])
                 self.sum += amount[i]*price[i]
                 receipt_list.append((ID[i], amount[i]))
-            else: 
-                stock.use_item(ID, amount)
-                price = stock.get_cost(ID)
-                self.sum += amount*price
-                receipt_list.append((ID, amount))
+        else: 
+            stock.update_stock(ID, amount)
+            price = stock.get_cost(ID)
+            self.sum += amount*price
+            receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock, "p")
-        book.add_reciepts(self, reciepts)
-        account.add_transaction(-sum) #romving used amount
+        book.add_reciepts(receipt)
+        account.add_transaction(-self.sum) #romving used amount
 
         print("".format("Item", "Amount", "Price pr. unit"))
         if type(ID) == list:
             for i in range(len(ID)):
-                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]), amount[i], stock.cost(ID[i])))
+                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]).name, amount[i], stock.cost(ID[i])))
         else:
-            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID), amount, stock.get_cost(ID)))
+            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID).name, amount, stock.get_cost(ID)))
 
         print("\n")
-        print("Total: {} kr".format(sum))
+        print("Total: {} kr".format(self.sum))
 
 class Counter:
     pass
