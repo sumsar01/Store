@@ -98,19 +98,21 @@ class Account:
     Will return current holdings in the account.
     """
     def __init__(self, starting_holdings):
-        if type(float(starting_holdings)) == float():
+        self.account_holding = 0
+        try:
             self.account_holding = float(starting_holdings)
-        else:
-            ValueError("Error: Starting holdings must be a float or int...")
+        except:
+            raise TypeError("sum must be a number...")
 
     def add_transaction(self, sum):
-        if type(float(sum)) == float():
+        try:
             self.account_holding += float(sum)
-        else:
-            ValueError("Error: sum must be a float or int...")
+        except:
+            raise TypeError("sum must be a number...")
 
     def get(self):
         return self.account_holding
+
 
 class Sale:
     """
@@ -136,25 +138,25 @@ class Sale:
                 price = stock.get_price(ID[i])
                 self.sum += amount[i]*price[i]
                 receipt_list.append((ID[i], amount[i]))
-            else: 
-                stock.use_item(ID, amount)
-                price = stock.get_price(ID)
-                self.sum += amount*price
-                receipt_list.append((ID, amount))
+        else: 
+            stock.use_item(ID, amount)
+            price = stock.get_price(ID)
+            self.sum += amount*price
+            receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock)
-        book.add_reciepts(self, reciepts)
-        account.add_transaction(sum)
+        book.add_reciepts(receipt)
+        account.add_transaction(self.sum)
 
         print("".format("Item", "Amount", "Price pr. unit"))
         if type(ID) == list:
             for i in range(len(ID)):
-                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]), amount[i], stock.get_price(ID[i])))
+                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]).name, amount[i], stock.get_price(ID[i])))
         else:
-            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID), amount, stock.get_price(ID)))
+            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID).name, amount, stock.get_price(ID)))
 
         print("\n")
-        print("Total: {} kr".format(sum))
+        print("Total: {} kr".format(self.sum))
 
 class Purchase:
     """
@@ -176,29 +178,29 @@ class Purchase:
         receipt_list = []
         if type(ID) == list:
             for i in range(len(ID)):
-                stock.use_item(ID[i], amount[i])
+                stock.update_stock(ID[i], amount[i])
                 price = stock.get_cost(ID[i])
                 self.sum += amount[i]*price[i]
                 receipt_list.append((ID[i], amount[i]))
-            else: 
-                stock.use_item(ID, amount)
-                price = stock.get_cost(ID)
-                self.sum += amount*price
-                receipt_list.append((ID, amount))
+        else: 
+            stock.update_stock(ID, amount)
+            price = stock.get_cost(ID)
+            self.sum += amount*price
+            receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock, "p")
-        book.add_reciepts(self, reciepts)
-        account.add_transaction(-sum) #romving used amount
+        book.add_reciepts(receipt)
+        account.add_transaction(-self.sum) #romving used amount
 
         print("".format("Item", "Amount", "Price pr. unit"))
         if type(ID) == list:
             for i in range(len(ID)):
-                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]), amount[i], stock.cost(ID[i])))
+                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]).name, amount[i], stock.cost(ID[i])))
         else:
-            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID), amount, stock.get_cost(ID)))
+            print("{:<20} {:<5} {:<5}".format(stock.get_item(ID).name, amount, stock.get_cost(ID)))
 
         print("\n")
-        print("Total: {} kr".format(sum))
+        print("Total: {} kr".format(self.sum))
 
 class Counter:
     pass
@@ -242,28 +244,34 @@ class Stock:
 
     def add_item(self, ID, StockUnit, price, amount_in_stock):
         if ID in self.stock:
-            print("Error: ID already in stock...")
+            raise ValueError("Error: ID already in stock...")
         else:
             holder = {ID : [StockUnit, price, amount_in_stock]}
             self.stock.update(holder)
 
     def use_item(self, ID, amount):
         if ID in self.stock:
-            self.stock[ID][2] -= amount
+            try:
+                self.stock[ID][2] -= amount
+            except:
+                raise TypeError("Wrong type the added amount must be a number...")
         else:
-            print("Error: ID not found...")
+            raise ValueError("Error: ID not found...")
 
     def update_stock(self, ID, amount):
         if ID in self.stock:
-            self.stock[ID][2] += amount
+            try:
+                self.stock[ID][2] += amount
+            except:
+                raise TypeError("Wrong type the added amount must be a number...")
         else:
-            print("Error: ID not found...")
+            raise ValueError("ID not found...")
 
     def delete_item(self, ID):
         if ID in self.stock:
             del self.stock[ID]
         else:
-            print("Error: ID not found...")
+            raise ValueError("ID not found...")
 
     def stock_information(self):
         print("{:<5} {:<20} {:<10} {:<10} {:<10} {:<10}".format("ID", "Name", "Unit", "Cost", "Price", "Amount"))
@@ -272,13 +280,22 @@ class Stock:
         print("\n")
 
     def get_price(self, ID):
-        return self.stock[ID][1]
+        if ID in self.stock:
+            return self.stock[ID][1]
+        else:
+            raise ValueError("ID not found...")
 
     def get_cost(self, ID):
-        return self.stock[ID][0].cost
+        if ID in self.stock:
+            return self.stock[ID][0].cost
+        else:
+            raise ValueError("ID not found...")
 
     def get_item(self, ID):
-        return self.stock[ID]
+        if ID in self.stock:
+            return self.stock[ID][0]
+        else:
+            raise ValueError("ID not found...")
 
 class StockUnit:
     """
@@ -324,14 +341,14 @@ class StockUnit:
         if type(new_description) == str:
             self.description = new_description
         else:
-            raise ValueError("Error: wrong type the description must be a string...")
+            raise TypeError("Wrong type the description must be a string...")
 
 
     def set_cost(self, new_cost):
         if type(new_cost) == float:
             self.cost = new_cost
         else:
-            raise ValueError("Error: wrong type the new cost must be a float...")
+            raise TypeError("Wrong type the new cost must be a float...")
 
 class Clerk:
     pass
