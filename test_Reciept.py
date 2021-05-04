@@ -11,7 +11,7 @@ class TestReciept(unittest.TestCase):
         self.test_stock.add_item(1, eggs, 25, 50)
         self.test_stock.add_item(2, potatoes, 15, 30)
         id_q_list = [(1, 2), (2, 2)]
-        self.test_reciept = michael_work.Reciept(id_q_list, self.test_stock, purchase_sale="s")
+        self.test_reciept = shop.Reciept(id_q_list, self.test_stock, purchase_sale="s")
 
     def test_calc_item_pricecost(self):
         total_price_of_eggs = self.test_reciept.item_entries[0][2]
