@@ -1,6 +1,6 @@
 import unittest
 import shop
-import michael_work # overflødig når vi tager arbejdet ind i shop filen!
+
 
 class TestReciept(unittest.TestCase):
 
