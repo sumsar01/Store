@@ -199,28 +199,34 @@ class Stock:
 
     def add_item(self, ID, StockUnit, price, amount_in_stock):
         if ID in self.stock:
-            print("Error: ID already in stock...")
+            raise ValueError("Error: ID already in stock...")
         else:
             holder = {ID : [StockUnit, price, amount_in_stock]}
             self.stock.update(holder)
 
     def use_item(self, ID, amount):
         if ID in self.stock:
-            self.stock[ID][2] -= amount
+            try:
+                self.stock[ID][2] -= amount
+            except:
+                raise TypeError("Wrong type the added amount must be a number...")
         else:
-            print("Error: ID not found...")
+            raise ValueError("Error: ID not found...")
 
     def update_stock(self, ID, amount):
         if ID in self.stock:
-            self.stock[ID][2] += amount
+            try:
+                self.stock[ID][2] += amount
+            except:
+                raise TypeError("Wrong type the added amount must be a number...")
         else:
-            print("Error: ID not found...")
+            raise ValueError("ID not found...")
 
     def delete_item(self, ID):
         if ID in self.stock:
             del self.stock[ID]
         else:
-            print("Error: ID not found...")
+            raise ValueError("ID not found...")
 
     def stock_information(self):
         print("{:<5} {:<20} {:<10} {:<10} {:<10} {:<10}".format("ID", "Name", "Unit", "Cost", "Price", "Amount"))
@@ -229,13 +235,22 @@ class Stock:
         print("\n")
 
     def get_price(self, ID):
-        return self.stock[ID][1]
+        if ID in self.stock:
+            return self.stock[ID][1]
+        else:
+            raise ValueError("ID not found...")
 
     def get_cost(self, ID):
-        return self.stock[ID][0].cost
+        if ID in self.stock:
+            return self.stock[ID][0].cost
+        else:
+            raise ValueError("ID not found...")
 
     def get_item(self, ID):
-        return self.stock[ID]
+        if ID in self.stock:
+            return self.stock[ID][0]
+        else:
+            raise ValueError("ID not found...")
 
 class StockUnit:
     """
@@ -281,14 +296,14 @@ class StockUnit:
         if type(new_description) == str:
             self.description = new_description
         else:
-            raise ValueError("Error: wrong type the description must be a string...")
+            raise TypeError("Wrong type the description must be a string...")
 
 
     def set_cost(self, new_cost):
         if type(new_cost) == float:
             self.cost = new_cost
         else:
-            raise ValueError("Error: wrong type the new cost must be a float...")
+            raise TypeError("Wrong type the new cost must be a float...")
 
 class Clerk:
     pass

@@ -17,8 +17,8 @@ class StockUnit_test(unittest.TestCase):
         self.assertEqual(self.mælk.description, "Mælken fra en ko.")
         self.assertEqual(self.kaffe.description, "Malet kaffe i en pose.")
 
-        self.assertRaises(ValueError, self.mælk.set_description, 123)
-        self.assertRaises(ValueError, self.kaffe.set_description, 563.77)
+        self.assertRaises(TypeError, self.mælk.set_description, 123)
+        self.assertRaises(TypeError, self.kaffe.set_description, 563.77)
         
 
     def test_set_cost(self):
@@ -27,8 +27,8 @@ class StockUnit_test(unittest.TestCase):
         self.assertEqual(self.mælk.cost, 5.00)
         self.assertEqual(self.kaffe.cost, 20.00)
 
-        self.assertRaises(ValueError, self.mælk.set_cost, "hej")
-        self.assertRaises(ValueError, self.kaffe.set_cost, [])
+        self.assertRaises(TypeError, self.mælk.set_cost, "hej")
+        self.assertRaises(TypeError, self.kaffe.set_cost, [])
 
 
 if __name__ == "__main__":
