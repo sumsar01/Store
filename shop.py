@@ -293,23 +293,32 @@ class StockUnit:
 class Clerk:
     pass
 
-class Reciept:
-    """ This class is used to hold the reciept of transactions.
+class Receipt:
+    """ This class is used to hold the receipt of transactions.
+
+        Fields:
+        date -- The date the receipt object was made.
+        item_entries -- contains a list of tuples: (ID, quantity, total price/cost for this ID)
+        total -- total price/cost of all receipt entries.
+        purchase_sale -- "s" if the receipt is for a sale and "p" if purchase
 
         Arguments: 
-        list_of_id_quantity {[(ID, quantity),...]} -- To make a reciept object one has to supply a list of tuples: (ID, quantity)
+        list_of_id_quantity {[(ID, quantity),...]} -- To make a receipt object one has to supply a list of tuples: (ID, quantity)
         which contains the ID of the product bought and the quantity.
 
         stock {Stock()} -- A stock object has to be supplied to be able to fetch the price/cost of each entry
-        on a given reciept.
+        on a given receipt.
 
         Keyword arguments:
-        purchase sale {string} -- A string that must be either "s" if the reciept is for a sale by the shop or "p" if
+        purchase sale {string} -- A string that must be either "s" if the receipt is for a sale by the shop or "p" if
         it is for a purchase buy the shop from a supplier.
 
-        Returns:
-        Reciept object. The object has a date, item_entries which contains a list of tuples: (ID, quantity, total price/cost for this ID),
-        a total price/cost and finally whether it was a purchase or sale.
+        Methods:
+        calc_item_pricecost() -- For each entry on the receipt the total price/cost is calculated
+
+        make_full_item_entries() -- populates the field item_entries.
+
+        calc_total() -- populates the field total with the total price/cost
     """
 
     def __init__(self, list_of_id_quantity, stock, purchase_sale="s"):
@@ -352,8 +361,8 @@ class Reciept:
         self.total = total 
 
 
-    def print_reciept(self):
-        print("\n\t   RECIEPT \t")
+    def print_receipt(self):
+        print("\n\t   RECEIPT \t")
         print("{:<10} {:<10} {:<10}".format("ID", "Amount", "Price"))
         for item in self.item_entries:
             ID = item[0]
