@@ -6,7 +6,7 @@ class Shop:
 
 class Book:
     """ This class is made for bookkeeping. This bookkeeping is contained in two databases - one in memory and one in a csv file.
-        The database in memory holds the receipts of the current day. When the day ends these reciepts are counted to find the
+        The database in memory holds the receipts of the current day. When the day ends these receipts are counted to find the
         total sales, costs, and balance during the day. These informations are stored in the balance_history csv file. The receipts 
         of the day are also stored in a separate csv file containing receipts from previous days also.
 
@@ -27,13 +27,13 @@ class Book:
         self.day_sales = 0 
         self.day_costs = 0
         self.day_balance = 0
-        db_reciepts = open(f"{dbname}" + "_receipts.csv", "a")
+        db_receipts = open(f"{dbname}" + "_receipts.csv", "a")
         db_balance_history = open(f"{dbname}" + "_balance_history.csv", "a")
-        db_reciepts.close()
+        db_receipts.close()
         db_balance_history.close()
 
-    def add_receipt(self, reciept):
-        self.day_receipts.append(reciept)
+    def add_receipt(self, receipt):
+        self.day_receipts.append(receipt)
 
     def daily_close(self):
         self.find_day_sales()
@@ -48,10 +48,10 @@ class Book:
             self.day_costs += receipts_purchases[i].total 
 
     def find_day_sales(self):
-        reciepts_sales = list(filter(lambda receipt: receipt.purchase_sale == "s", self.day_receipts))
+        receipts_sales = list(filter(lambda receipt: receipt.purchase_sale == "s", self.day_receipts))
         self.day_sales = 0
-        for i in range(len(reciepts_sales)):
-            self.day_sales += reciepts_sales[i].total 
+        for i in range(len(receipts_sales)):
+            self.day_sales += receipts_sales[i].total 
 
     def store_balance(self):
         with open(f"{self.dbname}" + "_balance_history.csv", "w", newline="") as file:
@@ -117,7 +117,7 @@ class Account:
 class Sale:
     """
     Make a sale of either a list of IDs or a single ID
-    must take the used item stock, the book for reciepts 
+    must take the used item stock, the book for receipts 
     and the account used for the transaction.
 
     Sale(ID, amount, stock, book, account)
@@ -145,7 +145,7 @@ class Sale:
             receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock)
-        book.add_reciepts(receipt)
+        book.add_receipts(receipt)
         account.add_transaction(self.sum)
 
         print("".format("Item", "Amount", "Price pr. unit"))
@@ -162,7 +162,7 @@ class Purchase:
     """
     Make a pruchase of either a list of IDs or a single ID 
     and a given amount of that item eithher in list form or as a single int.
-    Must take the used item stock, the book for reciepts 
+    Must take the used item stock, the book for receipts 
     and the account used for the transaction.
 
     Sale(ID, amount, stock, book, account)
@@ -189,7 +189,7 @@ class Purchase:
             receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock, "p")
-        book.add_reciepts(receipt)
+        book.add_receipts(receipt)
         account.add_transaction(-self.sum) #romving used amount
 
         print("".format("Item", "Amount", "Price pr. unit"))
