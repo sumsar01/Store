@@ -1,41 +1,84 @@
 import numpy as np
 import datetime as dt
-
-
+import csv
 class Shop:
     pass
 
 class Book:
-    """ """
-    def __init__(self):
-        self.reciepts = [] # list of reciepts 
-        self.day_sales = []   # list of sales for each day
-        self.day_costs = []  # list of variable costs for each day
-        self.day_balance = []    # list of sales - variable cost for each day
+    """ This class is made for bookkeeping. This bookkeeping is contained in two databases - one in memory and one in a csv file.
+        The database in memory holds the receipts of the current day. When the day ends these reciepts are counted to find the
+        total sales, costs, and balance during the day. These informations are stored in the balance_history csv file. The receipts 
+        of the day are also stored in a separate csv file containing receipts from previous days also.
 
+        Arguments:
+        dbname -- The prefix name that is used to generate the two csv databases (one for receipts and one for balance history).
 
-    def add_reciepts(self, reciepts):
-        pass
+        Methods:
+        add_receipt() -- adds a new receipt to the list of receipts for the day
 
-    def find_day_costs(self, date):
-        day_costs = 0 
-        reciepts_of_day_costs = list(filter(lambda e: e[0].date() == date and e[2] < 0, self.reciepts))
-        for i in range(len(reciepts_of_day_costs)):
-            day_costs += reciepts_of_day_costs[i][2] 
-        self.day_costs.append(day_costs)
+        daily_close() -- This method writes receipts and (sales, costs, balance) to their respective files and reinitializes
+        important book fields, so they are clean for the next bookkeeping day.
 
-    def find_day_sales(self, date):
-        day_sales = 0 
-        reciepts_of_day_sales = list(filter(lambda e: e[0].date() == date and e[2] > 0, self.reciepts))
-        for i in range(len(reciepts_of_day_sales)):
-            day_sales += reciepts_of_day_sales[i][2] 
-        self.day_sales.append(day_sales)
+        print_balance_history() -- Prints the balance history - rows of (Date, sales, costs, balance)
+    """
+    def __init__(self, dbname):
+        self.dbname = dbname
+        self.day_receipts = []
+        self.day_sales = 0 
+        self.day_costs = 0
+        self.day_balance = 0
+        db_reciepts = open(f"{dbname}" + "_receipts.csv", "a")
+        db_balance_history = open(f"{dbname}" + "_balance_history.csv", "a")
+        db_reciepts.close()
+        db_balance_history.close()
 
-    def print_history(self):
-        unique_days_in_reciepts = np.unique([e[0].date() for e in self.reciepts])
-        print("{:<10} {:<10} {:<10}".format("Sales", "Costs", "Date"))
-        for i in range(len(self.day_sales)):
-            print("{:<10} {:<10} {:<10}".format(self.day_sales[i], self.day_costs[i], unique_days_in_reciepts[i]))
+    def add_receipt(self, reciept):
+        self.day_receipts.append(reciept)
+
+    def daily_close(self):
+        self.find_day_sales()
+        self.find_day_costs()
+        self.store_balance()
+        self.store_todays_receipts()
+
+    def find_day_costs(self):
+        receipts_purchases = list(filter(lambda receipt: receipt.purchase_sale == "p", self.day_receipts))
+        self.day_costs = 0
+        for i in range(len(receipts_purchases)):
+            self.day_costs += receipts_purchases[i].total 
+
+    def find_day_sales(self):
+        reciepts_sales = list(filter(lambda receipt: receipt.purchase_sale == "s", self.day_receipts))
+        self.day_sales = 0
+        for i in range(len(reciepts_sales)):
+            self.day_sales += reciepts_sales[i].total 
+
+    def store_balance(self):
+        with open(f"{self.dbname}" + "_balance_history.csv", "w", newline="") as file:
+            date = dt.datetime.today()
+            writer = csv.writer(file, delimiter=" ")
+            writer.writerow([date, self.day_sales, self.day_costs, self.day_balance])
+        self.day_sales = 0 
+        self.day_costs = 0 
+        self.day_balance = 0
+
+    def store_todays_receipts(self):
+        with open(f"{self.dbname}" + "_receipts.csv", "w", newline="") as file:
+            for receipt in self.day_receipts:
+                date = dt.datetime.today()
+                writer = csv.writer(file, delimiter=" ")
+                writer.writerow([date, receipt.total, receipt.purchase_sale, receipt.item_entries])
+        self.day_receipts = [] 
+
+    def print_balance_history(self):
+        print("{:<10} {:<10} {:<10} {:<10}".format("Date", "Sales", "Costs", "Balance"))
+        with open(f"{self.dbname}" + "_balance_history.csv", "r", newline="") as file:
+            reader = csv.reader(file, delimiter=" ")
+            for row in reader:
+                print("{:<10} {:<10} {:<10} {:<10}".format(row[0], row[1], row[2], row[3]))
+
+    
+
 
 class Account:
     """
