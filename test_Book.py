@@ -10,7 +10,7 @@ class TestBook(unittest.TestCase):
         test_stock = shop.Stock()
         n = 10
         self.test_receipts = []
-        for i in range(n):
+        for _ in range(n):
             receipt_len = np.random.randint(50)
             rnd_list1 = np.random.randint(500, size=receipt_len)
             rnd_list2 = np.random.randint(10, size=receipt_len)
