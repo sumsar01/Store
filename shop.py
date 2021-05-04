@@ -55,19 +55,21 @@ class Account:
     Will return current holdings in the account.
     """
     def __init__(self, starting_holdings):
-        if type(float(starting_holdings)) == float():
+        self.account_holding = 0
+        try:
             self.account_holding = float(starting_holdings)
-        else:
-            ValueError("Error: Starting holdings must be a float or int...")
+        except:
+            raise TypeError("sum must be a number...")
 
     def add_transaction(self, sum):
-        if type(float(sum)) == float():
+        try:
             self.account_holding += float(sum)
-        else:
-            ValueError("Error: sum must be a float or int...")
+        except:
+            raise TypeError("sum must be a number...")
 
     def get(self):
         return self.account_holding
+
 
 class Sale:
     """
