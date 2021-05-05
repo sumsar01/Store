@@ -1,6 +1,7 @@
 import numpy as np
 import datetime as dt
 import csv
+
 class Shop:
     pass
 
@@ -77,9 +78,6 @@ class Book:
             for row in reader:
                 print("{:<10} {:<10} {:<10} {:<10}".format(row[0], row[1], row[2], row[3]))
 
-    
-
-
 class Account:
     """
     An account of the current monetary holdings.
@@ -113,7 +111,6 @@ class Account:
     def get(self):
         return self.account_holding
 
-
 class Sale:
     """
     Make a sale of either a list of IDs or a single ID
@@ -145,7 +142,7 @@ class Sale:
             receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock)
-        book.add_receipts(receipt)
+        book.add_receipt(receipt)
         account.add_transaction(self.sum)
 
         print("".format("Item", "Amount", "Price pr. unit"))
@@ -189,7 +186,7 @@ class Purchase:
             receipt_list.append((ID, amount))
 
         receipt = Receipt(receipt_list, stock, "p")
-        book.add_receipts(receipt)
+        book.add_receipt(receipt)
         account.add_transaction(-self.sum) #romving used amount
 
         print("".format("Item", "Amount", "Price pr. unit"))
