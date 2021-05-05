@@ -1,5 +1,6 @@
 import shop
 import pytest
+import os
 
 def test_Purchase():
     stock1 = shop.Stock()
@@ -8,9 +9,9 @@ def test_Purchase():
     kaffe = shop.StockUnit("kaffe", 15.00, "kg")
     stock1.add_item("123", mælk, 7.50, 100)
     stock2.add_item("255", kaffe, 59.95, 20)
-    book1 = shop.Book()
+    book1 = shop.Book("testBook1")
     account1 = shop.Account(2000)
-    book2 = shop.Book()
+    book2 = shop.Book("testBook2")
     account2 = shop.Account(2000)
 
 
@@ -25,3 +26,5 @@ def test_Purchase():
 
     #mangler at tæste at regningen er der
     #mangler at teste for en liste af inputs
+    os.remove("testBook1.csv")
+    os.remove("testBook2.csv")
