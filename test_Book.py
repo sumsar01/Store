@@ -23,10 +23,16 @@ class TestBook(unittest.TestCase):
 
         self.assertEqual(test_receipt, self.test_book.day_receipts[0])
 
-    def test_2(self):
+    def test_find_day_costs(self):
         pass
 
-    def test_3(self):
+    def test_find_day_sales(self):
+        pass
+
+    def test_store_balance(self):
+        pass
+
+    def test_todays_receipts(self):
         pass
 
 
