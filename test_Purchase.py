@@ -26,5 +26,7 @@ def test_Purchase():
 
     #mangler at tæste at regningen er der
     #mangler at teste for en liste af inputs
-    os.remove("testBook1.csv")
-    os.remove("testBook2.csv")
+    os.remove("testBook1_balance_history.csv")
+    os.remove("testBook1_receipts.csv")
+    os.remove("testBook2_balance_history.csv")
+    os.remove("testBook2_receipts.csv")

@@ -6,7 +6,7 @@ class Reciept:
     """ This class is used to hold the reciept of transactions.
 
         Arguments: 
-        list_of_id_quantity {[(,),...]} -- To make a reciept object one has to supply a list of tuples: (ID, quantity)
+        list_of_id_quantity {[(ID, quantity),...]} -- To make a reciept object one has to supply a list of tuples: (ID, quantity)
         which contains the ID of the product bought and the quantity.
 
         stock {Stock()} -- A stock object has to be supplied to be able to fetch the price/cost of each entry

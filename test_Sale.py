@@ -24,6 +24,8 @@ def test_Sale():
     assert stock1.stock["123"][2] == 50
     assert stock2.stock["255"][2] == 15
 
+    print(book1.day_receipts)
+
     #mangler at tæste at regningen er der
     #mangler at teste for en liste af inputs
     os.remove("testBook1_balance_history.csv")
