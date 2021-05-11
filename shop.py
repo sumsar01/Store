@@ -28,8 +28,8 @@ class Book:
         self.day_sales = 0 
         self.day_costs = 0
         self.day_balance = 0
-        db_receipts = open(f"{dbname}" + "_receipts.csv", "a")
-        db_balance_history = open(f"{dbname}" + "_balance_history.csv", "a")
+        db_receipts = open(f"{dbname}" + "_receipts.csv", "x")
+        db_balance_history = open(f"{dbname}" + "_balance_history.csv", "x")
         db_receipts.close()
         db_balance_history.close()
 
