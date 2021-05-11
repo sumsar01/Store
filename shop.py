@@ -28,8 +28,8 @@ class Book:
         self.day_sales = 0 
         self.day_costs = 0
         self.day_balance = 0
-        db_receipts = open(f"{dbname}" + "_receipts.csv", "x")
-        db_balance_history = open(f"{dbname}" + "_balance_history.csv", "x")
+        db_receipts = open(f"{dbname}" + "_receipts.csv", "a")
+        db_balance_history = open(f"{dbname}" + "_balance_history.csv", "a")
         db_receipts.close()
         db_balance_history.close()
 
@@ -37,10 +37,21 @@ class Book:
         self.day_receipts.append(receipt)
 
     def daily_close(self):
-        self.find_day_sales()
-        self.find_day_costs()
         self.store_balance()
         self.store_todays_receipts()
+        self.wipe_daily_info()
+
+    def wipe_daily_info(self):
+        self.day_receipts = []
+        self.day_sales = 0 
+        self.day_costs = 0
+        self.day_balance = 0
+
+
+    def find_day_balance(self):
+        self.find_day_costs()
+        self.find_day_sales()
+        self.day_balance = self.day_sales - self.day_costs
 
     def find_day_costs(self):
         receipts_purchases = list(filter(lambda receipt: receipt.purchase_sale == "p", self.day_receipts))
@@ -55,7 +66,10 @@ class Book:
             self.day_sales += receipts_sales[i].total 
 
     def store_balance(self):
-        with open(f"{self.dbname}" + "_balance_history.csv", "w", newline="") as file:
+        self.find_day_sales()
+        self.find_day_costs()
+        self.find_day_balance()
+        with open(f"{self.dbname}" + "_balance_history.csv", "a", newline="") as file:
             date = dt.datetime.today()
             writer = csv.writer(file, delimiter=" ")
             writer.writerow([date, self.day_sales, self.day_costs, self.day_balance])
@@ -64,7 +78,7 @@ class Book:
         self.day_balance = 0
 
     def store_todays_receipts(self):
-        with open(f"{self.dbname}" + "_receipts.csv", "w", newline="") as file:
+        with open(f"{self.dbname}" + "_receipts.csv", "a", newline="") as file:
             for receipt in self.day_receipts:
                 date = dt.datetime.today()
                 writer = csv.writer(file, delimiter=" ")
@@ -77,6 +91,20 @@ class Book:
             reader = csv.reader(file, delimiter=" ")
             for row in reader:
                 print("{:<10} {:<10} {:<10} {:<10}".format(row[0], row[1], row[2], row[3]))
+
+    def print_todays_receipts(self):
+        print("\n")
+        print("{:<15} {:<15} {:<10}".format("#Date", "#Purchase/Sale", "#Total"))
+        for receipt in self.day_receipts:
+            print("{}\t{:<15} {:<10}".format(receipt.date, receipt.purchase_sale, receipt.total))
+
+
+    def print_todays_receipts_full(self):
+        pass
+
+    def print_receipts(self):
+        pass
+
 
 class Account:
     """
