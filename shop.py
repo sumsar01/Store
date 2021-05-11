@@ -133,7 +133,7 @@ class Sale:
             for i in range(len(ID)):
                 stock.use_item(ID[i], amount[i])
                 price = stock.get_price(ID[i])
-                self.sum += amount[i]*price[i]
+                self.sum += amount[i]*price
                 receipt_list.append((ID[i], amount[i]))
         else: 
             stock.use_item(ID, amount)
@@ -177,7 +177,7 @@ class Purchase:
             for i in range(len(ID)):
                 stock.update_stock(ID[i], amount[i])
                 price = stock.get_cost(ID[i])
-                self.sum += amount[i]*price[i]
+                self.sum += amount[i]*price
                 receipt_list.append((ID[i], amount[i]))
         else: 
             stock.update_stock(ID, amount)
@@ -192,7 +192,7 @@ class Purchase:
         print("".format("Item", "Amount", "Price pr. unit"))
         if type(ID) == list:
             for i in range(len(ID)):
-                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]).name, amount[i], stock.cost(ID[i])))
+                print("{:<20} {:<5} {:<5}".format(stock.get_item(ID[i]).name, amount[i], stock.get_cost(ID[i])))
         else:
             print("{:<20} {:<5} {:<5}".format(stock.get_item(ID).name, amount, stock.get_cost(ID)))
 
