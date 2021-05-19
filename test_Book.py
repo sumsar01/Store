@@ -1,6 +1,7 @@
 import unittest
 import shop
 import numpy as np
+import os
 
 
 class TestBook(unittest.TestCase):
@@ -58,6 +59,12 @@ class TestBook(unittest.TestCase):
                 pass
             last_line = line[:-1].split(" ")
         self.assertEqual(int(last_line[2]), self.test_receipt_purc2.total)
+
+    def test_wdelete_testBook(self):
+        #The test is named wdelete such that unittest run it last
+        os.remove("testBook_balance_history.csv")
+        os.remove("testBook_receipts.csv")
+
 
 if __name__ == '__main__':
     unittest.main()
