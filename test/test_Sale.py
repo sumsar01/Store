@@ -1,6 +1,8 @@
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import shop
 import pytest
-import os
+
 
 def test_Sale():
     stock1 = shop.Stock()
@@ -27,13 +29,11 @@ def test_Sale():
     assert stock2.stock["255"][2] == 15
 
     shop.Sale(["123", "255"] , [5, 2], stock1, book1, account1)
-
     assert account1.get() == (2000 + 50*7.50 + 5*7.50 + 2*59.95)
     assert stock1.stock["123"][2] == 45
     assert stock1.stock["255"][2] == 18
 
     shop.Sale(["255", "255"] , [5, 5], stock1, book1, account1)
-
     assert account1.get() == (2000 + 50*7.50 + 5*7.50 + 2*59.95 + 10*59.95)
     assert stock1.stock["255"][2] == 18-10
 

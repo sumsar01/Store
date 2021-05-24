@@ -1,7 +1,8 @@
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import unittest
 import shop
 import numpy as np
-import os
 
 
 class TestBook(unittest.TestCase):
