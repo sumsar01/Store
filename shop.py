@@ -1,9 +1,23 @@
 import numpy as np
 import datetime as dt
 import csv
+import pickle
 
 class Shop:
-    pass
+    def __init__(self, shop_name, starting_cash):
+        self.book = Book(shop_name)
+        self.account = Account(starting_cash)
+        self.stock = Stock()
+
+    def sell_items(self):
+        pass
+
+    def update_supply(self):
+        pass
+
+    def save_shop(self):
+        pass
+
 
 class Book:
     """ This class is made for bookkeeping. This bookkeeping is contained in two databases - one in memory and one in a csv file.
@@ -104,7 +118,6 @@ class Book:
 
     def print_receipts(self):
         pass
-
 
 class Account:
     """
@@ -226,9 +239,6 @@ class Purchase:
 
         print("\n")
         print("Total: {} kr".format(self.sum))
-
-class Counter:
-    pass
 
 class Stock:
     """
@@ -374,9 +384,6 @@ class StockUnit:
             self.cost = new_cost
         else:
             raise TypeError("Wrong type the new cost must be a float...")
-
-class Clerk:
-    pass
 
 class Receipt:
     """ This class is used to hold the receipt of transactions.
