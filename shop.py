@@ -3,6 +3,28 @@ import datetime as dt
 import csv
 
 class Shop:
+    """
+    The shop class creates a shop which can sell items, restock its supply
+    and keep track of what is going in and out.
+
+    Shop(shop_name, starting_cash)
+
+    shop_name - is a string with the name of the shop.
+    starting_cash - is the amount of cash the shop has in its account when created.
+
+    Methods:
+    sell_items(ID, amount)
+        Makes a sale of an item in the stock, with str ID and amount unites are sold.
+        ID and amount can be either a single input or a list if more units are sold.
+
+    update_supply(ID, amount)
+        Restock item in the stock, with str ID and amount unites are restocked.
+        ID and amount can be either a single input or a list if more units are sold.
+
+    save_shop()
+        Saves the book for today. Must be done at the end of every buisness day.
+
+    """
     def __init__(self, shop_name, starting_cash):
         self.book = Book(shop_name)
         self.account = Account(starting_cash)
