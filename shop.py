@@ -1,7 +1,6 @@
 import numpy as np
 import datetime as dt
 import csv
-import pickle
 
 class Shop:
     def __init__(self, shop_name, starting_cash):
@@ -9,14 +8,15 @@ class Shop:
         self.account = Account(starting_cash)
         self.stock = Stock()
 
-    def sell_items(self):
-        pass
+    def sell_items(self, ID, amount):
+        Sale(ID, amount, self.stock, self.book, self.account)
 
-    def update_supply(self):
-        pass
+    def update_supply(self, ID, amount):
+        Sale(ID, amount, self.stock, self.book, self.account)
 
     def save_shop(self):
-        pass
+        self.book.store_balance
+        self.book.store_todays_receipts
 
 
 class Book:
